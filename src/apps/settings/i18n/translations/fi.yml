@@ -87,6 +87,8 @@ weg:
   dock_side: Sijainti
   delay_to_hide: Viive piilottaa
   delay_to_show: Viive näyttöön
+  item_show_upon_multitaskbar: Näytä tehtäväpalkkisovellukseni
+  behaviour: Useita näyttökäyttäytymistä
 devtools:
   load: Ladata
   custom_config_file: Lataa mukautettu konfigurointitiedosto

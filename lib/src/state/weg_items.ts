@@ -11,6 +11,7 @@ export interface PinnedWegItem {
   path: string;
   execution_command: string;
   is_dir: boolean;
+  presentative_monitor: number;
 }
 
 export interface TemporalPinnedWegItem {
@@ -44,4 +45,10 @@ export interface WegItems {
   left: WegItem[];
   center: WegItem[];
   right: WegItem[];
+}
+
+export interface MonitorInfo {
+  id: string;
+  index: number;
+  isPrimary: boolean;
 }

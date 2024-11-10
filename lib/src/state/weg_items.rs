@@ -124,3 +124,21 @@ impl WegItems {
         self.right = Self::sanitize_items(&mut dict, std::mem::take(&mut self.right));
     }
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(default, rename_all = "camelCase")]
+pub struct MonitorInfo {
+    pub id: String,
+    pub index: usize,
+    pub is_primary: bool,
+}
+
+impl Default for MonitorInfo {
+    fn default() -> Self {
+        Self {
+            id: String::new(),
+            index: 0,
+            is_primary: false,
+        }
+    }
+}
