@@ -376,6 +376,7 @@
         "hideMode": "On-Overlap",
         "margin": 8,
         "mode": "Min-Content",
+        "multitaskbarItemVisibilityBehaviour": "All screen",
         "padding": 8,
         "position": "Bottom",
         "size": 40,
@@ -1409,6 +1410,14 @@
         }
       }
     },
+    "SeelenWegItemDisplayOption": {
+      "type": "string",
+      "enum": [
+        "Primary screen all, anyway where open",
+        "All screen",
+        "Show where open"
+      ]
+    },
     "SeelenWegMode": {
       "type": "string",
       "enum": [
@@ -1460,6 +1469,15 @@
           "allOf": [
             {
               "$ref": "#/definitions/SeelenWegMode"
+            }
+          ]
+        },
+        "multitaskbarItemVisibilityBehaviour": {
+          "description": "Dock item visibility",
+          "default": "All screen",
+          "allOf": [
+            {
+              "$ref": "#/definitions/SeelenWegItemDisplayOption"
             }
           ]
         },
