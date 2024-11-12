@@ -29,6 +29,7 @@ pub struct FancyToolbar {
     pub theoretical_rect: RECT,
     last_focus: Option<HWND>,
     overlaped: bool,
+    last_overlapped_window: Window,
 }
 
 impl Drop for FancyToolbar {
@@ -48,6 +49,7 @@ impl FancyToolbar {
             last_focus: None,
             theoretical_rect: RECT::default(),
             overlaped: false,
+            last_overlapped_window: Window::from(HWND::default()),
         })
     }
 
@@ -72,12 +74,31 @@ impl FancyToolbar {
 
     pub fn handle_overlaped_status(&mut self, hwnd: HWND) -> Result<()> {
         let window = Window::from(hwnd);
+        let monitor_index = window.monitor().index()?;
         let is_overlaped = self.is_overlapping(hwnd)?
             && !window.is_desktop()
             && !window.is_seelen_overlay()
             && !NATIVE_UI_POPUP_CLASSES.contains(&window.class().as_str())
             && !OVERLAP_BLACK_LIST_BY_EXE
                 .contains(&WindowsApi::exe(hwnd).unwrap_or_default().as_str());
+
+        let state = FULL_STATE.load();
+        let settings = &state.settings().seelenweg;
+
+        if settings.use_multi_monitor_overlap_logic {
+            if is_overlaped {
+                self.last_overlapped_window = window;
+            } else if self.last_overlapped_window.hwnd() != HWND::default()
+                && self.last_overlapped_window != window
+                && self.last_overlapped_window.monitor().index()? != monitor_index
+                && Window::from(self.window.hwnd()?).monitor().index()? != monitor_index
+            {
+                return Ok(());
+            }
+        } else {
+            self.last_overlapped_window = Window::from(HWND::default());
+        }
+
         self.set_overlaped_status(is_overlaped)
     }
 
