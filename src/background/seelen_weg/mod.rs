@@ -65,7 +65,7 @@ pub struct SeelenWegApp {
 pub struct SeelenWeg {
     window: WebviewWindow<Wry>,
     overlaped: bool,
-    last_overlapped_window: Window,
+    last_overlapped_window: Option<Window>,
     /// Is the rect that the dock should have when it isn't hidden
     pub theoretical_rect: RECT,
 }
@@ -234,7 +234,7 @@ impl SeelenWeg {
         let weg = Self {
             window: Self::create_window(postfix)?,
             overlaped: false,
-            last_overlapped_window: Window::from(HWND::default()),
+            last_overlapped_window: None,
             theoretical_rect: RECT::default(),
         };
         Ok(weg)
@@ -261,7 +261,7 @@ impl SeelenWeg {
 
     pub fn handle_overlaped_status(&mut self, hwnd: HWND) -> Result<()> {
         let window = Window::from(hwnd);
-        let monitor_index = window.monitor().index()?;
+        let monitor = window.monitor();
         let is_overlaped = self.is_overlapping(hwnd)?
             && !window.is_desktop()
             && !window.is_seelen_overlay()
@@ -274,16 +274,17 @@ impl SeelenWeg {
 
         if settings.use_multi_monitor_overlap_logic {
             if is_overlaped {
-                self.last_overlapped_window = window;
-            } else if self.last_overlapped_window.hwnd() != HWND::default()
-                && self.last_overlapped_window != window
-                && self.last_overlapped_window.monitor().index()? != monitor_index
-                && Window::from(self.window.hwnd()?).monitor().index()? != monitor_index
-            {
-                return Ok(());
+                self.last_overlapped_window = Some(window);
+            } else if let Some(past_window) = self.last_overlapped_window {
+                if past_window != window
+                    && past_window.monitor() != monitor
+                    && Window::from(self.window.hwnd()?).monitor() != monitor
+                {
+                    return Ok(());
+                }
             }
         } else {
-            self.last_overlapped_window = Window::from(HWND::default());
+            self.last_overlapped_window = None;
         }
 
         self.set_overlaped_status(is_overlaped)
