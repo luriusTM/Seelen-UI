@@ -301,6 +301,7 @@ pub struct SeelenWallSettings {
     pub backgrounds: Vec<SeelenWallWallpaper>,
     /// update interval in seconds
     pub interval: u64,
+    pub randomize: bool,
 }
 
 impl Default for SeelenWallSettings {
@@ -309,6 +310,7 @@ impl Default for SeelenWallSettings {
             enabled: true,
             backgrounds: vec![],
             interval: 60,
+            randomize: false,
         }
     }
 }

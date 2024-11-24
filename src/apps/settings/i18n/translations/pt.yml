@@ -22,9 +22,10 @@ header:
     developer: Desenvolvedor
     info: Informação
     seelen_rofi: Lançador de aplicativos
-    seelen_wall: A parede
     virtual_desk: Desktops virtuais
     home: Início
+    mods: Plug-ins e widgets
+    seelen_wall: Gerente de papel de parede
 start:
   title: Bem-vindo!
   message: >-
@@ -232,9 +233,13 @@ monitors_configurations:
   label: Monitor {{index}}
 wall:
   backgrounds: Papéis de parede
-  interval: Mude o papel de parede a cada (segundos)
-  enable: Ativar parede de Seelen
   no_background: A apresentação de slides vazia, usando o plano de fundo do tema.
+  enable: Ativar gerente de papel de parede
+  interval: Troque o papel de parede todos
+  random: Randomize Slideshow
+  minutes: minutos
+  hours: horas
+  seconds: segundas
 app_launcher:
   runners:
     cmd: Comando
@@ -251,3 +256,8 @@ update:
   channel: Atualizar canal
   downloading: Download ...
 miscellaneous: Miscelânea
+mods:
+  target: Alvo
+  widgets: Widgets
+  plugins: Plugins
+remove: Remover

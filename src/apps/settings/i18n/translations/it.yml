@@ -14,10 +14,11 @@ header:
     seelen_bar: Barra degli strumenti di fantasia
     seelen_wm: Gestore delle finestre
     specific_apps: App specifiche
-    seelen_wall: Sfondo
     seelen_rofi: Lanciatore di applicazioni
     virtual_desk: Desktop virtuali
     home: Casa
+    mods: Plugin e widget
+    seelen_wall: Manager di sfondo
 start:
   title: Benvenuta!
   message: >-
@@ -234,9 +235,13 @@ monitors_configurations:
   label: Monitor {{indice}}
 wall:
   backgrounds: Sfondi
-  enable: Abilita Seelen Wall
-  interval: Cambia lo sfondo ogni (secondi)
   no_background: Svuota vuota, usando invece lo sfondo del tema.
+  enable: Abilita Wallpaper Manager
+  interval: Cambia lo sfondo ogni
+  random: Randomizzare la presentazione
+  hours: ore
+  seconds: Secondi
+  minutes: minuti
 app_launcher:
   runners:
     cmd: Comando
@@ -253,3 +258,8 @@ update:
   downloading: Download ...
   channel: Canale di aggiornamento
 miscellaneous: Varie
+mods:
+  target: Bersaglio
+  widgets: Widget
+  plugins: Plugin
+remove: Rimuovere

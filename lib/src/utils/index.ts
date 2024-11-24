@@ -1,3 +1,5 @@
+import { getCurrentWindow } from '@tauri-apps/api/window';
+
 export * from './hooks';
 export * from './layered_hitbox';
 
@@ -42,7 +44,19 @@ export function disableWebviewShortcutsAndContextMenu() {
       }
     }
   });
-  window.addEventListener('contextmenu', (e) => e.preventDefault());
+  window.addEventListener('contextmenu', (e) => e.preventDefault(), { capture: true });
   window.addEventListener('drop', (e) => e.preventDefault());
   window.addEventListener('dragover', (e) => e.preventDefault());
+}
+
+// label schema: user/resource__query__monitor:display5
+export function getCurrentWidget() {
+  const { label } = getCurrentWindow();
+  const parsedLabel = label.replace('__query__', '?').replace(':', '=');
+  const query = new URLSearchParams(parsedLabel);
+  return {
+    id: `@${parsedLabel.split('?')[0]}`,
+    label,
+    attachedMonitor: query.get('monitor'),
+  };
 }

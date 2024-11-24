@@ -21,10 +21,11 @@ header:
     shortcuts: الاختصارات
     developer: مطور
     info: معلومة
-    seelen_wall: الجدار
     seelen_rofi: قاذفة التطبيق
     virtual_desk: أجهزة الكمبيوتر المكتبية الافتراضية
     home: بيت
+    mods: الإضافات والحاجيات
+    seelen_wall: مدير خلفية
 start:
   title: مرحباً!
   message: >-
@@ -226,10 +227,14 @@ save_and_restart: حفظ وإعادة التشغيل
 monitors_configurations:
   label: شاشة {{index}}
 wall:
-  enable: تمكين جدار سيلين
   backgrounds: خلفيات
   no_background: عرض شرائح فارغ ، باستخدام خلفية السمة بدلاً من ذلك.
-  interval: تغيير خلفية كل (ثواني)
+  enable: تمكين مدير خلفية
+  random: عرض عشوائي عرض الشرائح
+  interval: تغيير خلفية كل
+  hours: ساعات
+  seconds: ثوان
+  minutes: دقائق
 app_launcher:
   runners:
     explorer: يجري
@@ -246,3 +251,8 @@ update:
   channel: تحديث قناة
   downloading: تنزيل ...
 miscellaneous: متنوع
+mods:
+  target: هدف
+  widgets: الحاجيات
+  plugins: الإضافات
+remove: يزيل

@@ -15,9 +15,10 @@ header:
     monitors: څارونکي
     shortcuts: لنډوکونه
     seelen_rofi: د اپلیکیشن لانچر
-    seelen_wall: دېوال
     virtual_desk: مجازی ډیسټاپونه
     home: کور
+    mods: پلگ انونه او ویجټونه
+    seelen_wall: د وال پیپر سمبالګر
 start:
   title: ښه راغلاست!
   message_accent: د سټایل سره خپل محصول غوره کړئ!
@@ -229,8 +230,12 @@ monitors_configurations:
 wall:
   backgrounds: والپيپرونه
   no_background: پرځای یې خالي سلایډونه، پرځای د موضوع شالید په کارولو سره.
-  enable: د نیکي دیوال فعال کړئ
-  interval: وال پیپر هر (ثانیې)
+  enable: د وال پیپر مدیر فعال کړئ
+  random: تصادفي سلایډ
+  interval: په وال پیپر بدل کړئ
+  minutes: دقیقې
+  seconds: ثانیې
+  hours: ساعتونه
 app_launcher:
   runners:
     explorer: منډه وهل
@@ -247,3 +252,8 @@ update:
   downloading: دانلود ...
   channel: چینل تازه کول
 miscellaneous: متفرقه
+mods:
+  plugins: فلګونه
+  widgets: ویجټونه
+  target: هدف
+remove: لرې کول

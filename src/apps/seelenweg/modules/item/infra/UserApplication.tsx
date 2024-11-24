@@ -90,10 +90,11 @@ export const UserApplication = memo(({ item }: Props) => {
               onMouseMoveCapture={(e) => e.stopPropagation()}
               prefix="preview"
             >
-              {item.opens
-                .map((current: OpenedWindow) => (
+              <div className="weg-item-preview-scrollbar">
+                {item.opens.map((current: OpenedWindow) => (
                   <UserApplicationPreview key={current.hwnd} hwnd={current.hwnd} />
                 ))}
+              </div>
             </BackgroundByLayersV2>
           }
         >

@@ -7,6 +7,7 @@ quit: Quit
 close: Close
 open: Open
 delete: Delete
+remove: Remove
 insert: Insert
 more: More
 inherit: Inherit
@@ -24,13 +25,18 @@ header:
     seelen_wm: Window Manager
     seelen_weg: Dock/Taskbar
     seelen_rofi: App Launcher
-    seelen_wall: The Wall
+    seelen_wall: Wallpaper Manager
     monitors: Monitors
     specific_apps: Specific Apps
     shortcuts: Shortcuts
     developer: Developer
     info: Information
     virtual_desk: Virtual Desktops
+    mods: Plugins & Widgets
+mods:
+  plugins: Plugins
+  widgets: Widgets
+  target: Target
 start:
   title: Welcome!
   message: >-
@@ -170,10 +176,14 @@ apps_configurations:
 monitors_configurations:
   label: Monitor {{index}}
 wall:
-  enable: Enable Seelen Wall
-  interval: Change wallpaper every (seconds)
+  enable: Enable Wallpaper Manager
+  interval: Change wallpaper every
+  random: Randomize slideshow
   backgrounds: Wallpapers
   no_background: Empty slideshow, using theme's background instead.
+  hours: hours
+  minutes: minutes
+  seconds: seconds
 app_launcher:
   enable: Enable App Launcher
   monitor: Monitor to show

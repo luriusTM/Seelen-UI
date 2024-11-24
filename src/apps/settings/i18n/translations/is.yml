@@ -14,10 +14,11 @@ header:
     specific_apps: Sérstök forrit
     developer: Hönnuður
     seelen_weg: Bryggju/verkefnabar
-    seelen_wall: Vegginn
     seelen_rofi: App Launcher
     virtual_desk: Sýndarskjáborð
     home: Heim
+    mods: Viðbætur og búnaður
+    seelen_wall: Veggfóður framkvæmdastjóri
 start:
   title: Velkominn!
   message_accent: Fínstilltu framleiðni þína með stæl!
@@ -230,9 +231,13 @@ monitors_configurations:
   label: Monitor {{Index}}
 wall:
   backgrounds: Veggfóður
-  interval: Skiptu um veggfóður á hverju (sekúndum)
-  enable: Virkja Seelen Wall
   no_background: Tómar myndasýning, með því að nota bakgrunn þema í staðinn.
+  enable: Virkja veggfóðursstjóra
+  random: Slendandi myndasýning
+  interval: Skiptu um veggfóður hvert
+  hours: klukkustundir
+  seconds: sekúndur
+  minutes: mínútur
 app_launcher:
   runners:
     label: Hlauparar
@@ -249,3 +254,8 @@ update:
   channel: Uppfæra rás
   downloading: Niðurhal ...
 miscellaneous: Ýmislegt
+mods:
+  plugins: Viðbætur
+  target: Miðaðu
+  widgets: Búnaður
+remove: Fjarlægðu

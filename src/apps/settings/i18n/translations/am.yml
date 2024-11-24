@@ -14,10 +14,11 @@ header:
     seelen_bar: Fancy የመሣሪያ አሞሌ
     monitors: ተቆጣጣሪዎች
     seelen_wm: የመስኮት አቀናባሪ
-    seelen_wall: ግድግዳው
     seelen_rofi: የመተግበሪያ አስጀማሪ
     virtual_desk: ምናባዊ ዴስክቶፕስ
     home: ቤት
+    mods: ተሰኪዎች እና መግብሮች
+    seelen_wall: የግድግዳ ወረቀት ሥራ አስኪያጅ
 start:
   title: እንኳን ደህና መጣህ!
   message: >-
@@ -226,9 +227,13 @@ monitors_configurations:
   label: ይቆጣጠሩ {{አው.ፊ.}}}}
 wall:
   backgrounds: የግድግዳ ወረቀቶች
-  interval: የግድግዳ ወረቀት እያንዳንዱን (ሰከንዶች) ይለውጡ
   no_background: በመከራየት የፊት ገጽታውን ዳራ በመጠቀም ባዶ ተንሸራታች ትዕይንት.
-  enable: የጥንቃቄ ግድግዳ አንቃ
+  enable: የግድግዳ ወረቀት ሥራ አስኪያጅን ያንቁ
+  random: የዘፈቀደ ተንሸራታች ትዕይንት
+  interval: የግድግዳ ወረቀት እያንዳንዱን ይለውጡ
+  minutes: ደቂቃዎች
+  hours: ሰዓታት
+  seconds: ሰከንዶች
 app_launcher:
   runners:
     explorer: ሩጫ
@@ -245,3 +250,8 @@ update:
   downloading: ማውረድ ...
   channel: ጣቢያውን አዘምን
 miscellaneous: ልዩነቶች
+mods:
+  widgets: ፍርግሞች
+  plugins: ተሰኪዎች
+  target: Target ላማ
+remove: ያስወግዱ

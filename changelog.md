@@ -1,9 +1,17 @@
 # Changelog
 
 ## [Unreleased]
+### feature
+- add bases for future plugins and widgets sytems.
+- change wallpaper randomly.
+
+### enhancements
+- some UI/UX improvements on seelen wallpaper manager.
+
 ### fix
 - popups and context menus fast flashing.
 - media player app not appearing on media module (weg & toolbar).
+- touch looking the cursor.
 
 ## [2.0.5]
 ### features

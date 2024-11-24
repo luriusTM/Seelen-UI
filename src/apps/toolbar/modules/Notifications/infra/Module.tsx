@@ -1,6 +1,6 @@
 import { emit } from '@tauri-apps/api/event';
 import { Popover } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NotificationsTM, useWindowFocusChange } from 'seelen-core';
 
@@ -32,7 +32,7 @@ export function NotificationsModule({ module }: Props) {
   }, []);
 
   return (
-    <React.Fragment>
+    <Popover open={!openPreview} arrow={false} content={<ArrivalPreview />}>
       <Popover
         open={openPreview}
         trigger="click"
@@ -42,13 +42,6 @@ export function NotificationsModule({ module }: Props) {
       >
         <Item extraVars={{ count }} module={module} />
       </Popover>
-      <Popover
-        open={!openPreview}
-        arrow={false}
-        content={<ArrivalPreview />}
-      >
-
-      </Popover>
-    </React.Fragment>
+    </Popover>
   );
 }

@@ -15,9 +15,10 @@ header:
     general: Mkuu
     monitors: Wachunguzi
     seelen_rofi: Kizindua programu
-    seelen_wall: Ukuta
     virtual_desk: Dawati za kweli
     home: Nyumbani
+    mods: Plugins & Widgets
+    seelen_wall: Meneja wa Ukuta
 start:
   message_accent: Boresha tija yako na mtindo!
   message: >-
@@ -227,10 +228,14 @@ save_and_restart: Okoa na uanze tena
 monitors_configurations:
   label: Monitor {{index}}
 wall:
-  enable: Wezesha ukuta wa Seelen
   no_background: Slideshow tupu, kwa kutumia mandharinyuma ya mandhari badala yake.
   backgrounds: Wallpapers
-  interval: Badilisha Ukuta kila (sekunde)
+  enable: Washa Meneja wa Ukuta
+  interval: Badilisha Ukuta kila
+  random: Sisitiza slideshow
+  hours: masaa
+  minutes: dakika
+  seconds: sekunde
 app_launcher:
   runners:
     label: Wakimbiaji
@@ -247,3 +252,8 @@ update:
   downloading: Kupakua ...
   channel: Sasisha kituo
 miscellaneous: Miscellaneous
+mods:
+  plugins: Programu -jalizi
+  target: Lengo
+  widgets: Vilivyoandikwa
+remove: Ondoa

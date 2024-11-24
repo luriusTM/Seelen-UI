@@ -15,9 +15,10 @@ header:
     shortcuts: شارٹ کٹ
     monitors: مانیٹر
     seelen_rofi: ایپ لانچر
-    seelen_wall: دیوار
     virtual_desk: ورچوئل ڈیسک ٹاپس
     home: گھر
+    mods: پلگ انز اور وجیٹس
+    seelen_wall: وال پیپر منیجر
 start:
   title: عنوان
   message_accent: اپنی صلاحیت کو انداز کے ساتھ بہتر بنائیں!
@@ -230,10 +231,14 @@ save_and_restart: محفوظ کریں اور دوبارہ شروع کریں
 monitors_configurations:
   label: مانیٹر {{انڈیکس}}
 wall:
-  enable: سیلن وال کو فعال کریں
   no_background: اس کے بجائے تھیم کے پس منظر کا استعمال کرتے ہوئے ، خالی سلائیڈ شو۔
-  interval: وال پیپر ہر (سیکنڈ) تبدیل کریں
   backgrounds: وال پیپر
+  enable: وال پیپر مینیجر کو فعال کریں
+  random: سلائیڈ شو کو بے ترتیب بنائیں
+  interval: ہر ایک وال پیپر کو تبدیل کریں
+  hours: گھنٹے
+  minutes: منٹ
+  seconds: سیکنڈ
 app_launcher:
   runners:
     cmd: حکم
@@ -250,3 +255,8 @@ update:
   channel: چینل کو اپ ڈیٹ کریں
   downloading: ڈاؤن لوڈ کرنا ...
 miscellaneous: متفرق
+mods:
+  plugins: پلگ ان
+  widgets: ویجٹ
+  target: ہدف
+remove: ہٹا دیں

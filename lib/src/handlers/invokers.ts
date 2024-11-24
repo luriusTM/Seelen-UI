@@ -1,5 +1,8 @@
 import { invoke as tauriInvoke, InvokeArgs, InvokeOptions } from '@tauri-apps/api/core';
 
+import { Plugin } from '../state/plugin';
+import { Profile } from '../state/profile';
+
 export enum SeelenCommand {
   // General
   Run = 'run',
@@ -31,6 +34,9 @@ export enum SeelenCommand {
   StateGetWallpaper = 'state_get_wallpaper',
   StateSetWallpaper = 'state_set_wallpaper',
   StateGetHistory = 'state_get_history',
+  StateGetPlugins = 'state_get_plugins',
+  StateGetWidgets = 'state_get_widgets',
+  stateGetProfiles = 'state_get_profiles',
 
   // Media
   MediaPrev = 'media_prev',
@@ -83,6 +89,8 @@ export enum SeelenCommand {
 type ReturnTypeByCommand = Record<SeelenCommand, unknown> & {
   [SeelenCommand.CheckForUpdates]: boolean;
   [SeelenCommand.InstallLastAvailableUpdate]: never;
+  [SeelenCommand.StateGetPlugins]: Plugin[];
+  [SeelenCommand.stateGetProfiles]: Profile[];
 };
 
 export type SeelenCommandReturn<T extends SeelenCommand> = ReturnTypeByCommand[T];

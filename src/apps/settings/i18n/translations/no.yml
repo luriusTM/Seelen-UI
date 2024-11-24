@@ -15,9 +15,10 @@ header:
     seelen_weg: Dock/oppgavelinje
     monitors: Skjermer
     seelen_rofi: App Launcher
-    seelen_wall: Veggen
     virtual_desk: Virtuelle stasjonære maskiner
     home: Hjem
+    mods: Plugins og widgets
+    seelen_wall: Bakgrunnssjef
 start:
   title: Velkommen!
   message: >-
@@ -234,9 +235,13 @@ monitors_configurations:
   label: Overvåke {{indeks}}
 wall:
   backgrounds: Bakgrunnsbilder
-  enable: Aktiver Seelen Wall
   no_background: Tom lysbildefremvisning, ved å bruke temaets bakgrunn i stedet.
-  interval: Endre bakgrunnsbilder hver (sekunder)
+  enable: Aktiver bakgrunnssjef
+  random: Randomiser lysbildefremvisning
+  interval: Endre bakgrunnsbilde hver
+  minutes: minutter
+  seconds: sekunder
+  hours: timer
 app_launcher:
   runners:
     cmd: Kommando
@@ -253,3 +258,8 @@ update:
   downloading: Last ned ...
   channel: Oppdateringskanal
 miscellaneous: Diverse
+mods:
+  target: Mål
+  widgets: Widgets
+  plugins: Plugins
+remove: Fjerne

@@ -22,9 +22,10 @@ header:
     developer: Desarrollador
     info: Información
     seelen_rofi: Lanzador de aplicaciones
-    seelen_wall: La pared
     virtual_desk: Escritorios virtuales
     home: Hogar
+    mods: Complementos y widgets
+    seelen_wall: Gerente de fondo de pantalla
 start:
   title: ¡Bienvenido!
   message: >-
@@ -234,12 +235,16 @@ save_and_restart: Guardar y reiniciar
 monitors_configurations:
   label: Monitor {{índice}}
 wall:
-  interval: Cambiar papel tapiz cada (segundos)
   no_background: >-
     Presentación de diapositivas vacías, utilizando el fondo del tema en su
     lugar.
   backgrounds: Fondos de pantalla
-  enable: Habilitar la pared de Seelen
+  enable: Habilitar gerente de fondo de pantalla
+  interval: Cambiar papel tapiz cada
+  random: Aleatorizar la presentación de diapositivas
+  minutes: minutos
+  hours: horas
+  seconds: artículos de segunda clase
 app_launcher:
   runners:
     explorer: Correr
@@ -256,3 +261,8 @@ update:
   downloading: Descarga ...
   channel: Actualizar el canal
 miscellaneous: Misceláneas
+mods:
+  plugins: Complementos
+  widgets: Widgets
+  target: Objetivo
+remove: Eliminar

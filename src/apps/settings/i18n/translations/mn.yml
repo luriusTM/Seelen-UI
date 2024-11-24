@@ -14,10 +14,11 @@ header:
     seelen_wm: Цонхны менежер
     monitors: Хэлэлт авагч
     info: Мэдээлэл
-    seelen_wall: Хана
     seelen_rofi: Програм идэвхжсэн
     virtual_desk: Виржопын ширээний гутал
     home: Гэр
+    mods: Plugins & Widgets
+    seelen_wall: Хувьцааны төлөөлөгчний менежер
 start:
   message_accent: Өөрийнхөө бүтээмжийг загвараар оновчтой болгох!
   message: >-
@@ -231,8 +232,12 @@ monitors_configurations:
 wall:
   backgrounds: Ханын цаас
   no_background: Хоосон слайпешт, оронд нь.
-  enable: Seelen Ханыг идэвхжүүл
-  interval: БИДНИЙ ХӨГЖЛИЙН ХУВЬЦАА (секунд)
+  enable: Wallpaper менежерийг идэвхжүүлэх
+  interval: Ханын цаасыг өөрчлөх
+  random: Санамсаргүй байдлаар Slideshes
+  hours: цаг
+  minutes: хоёр хоног
+  seconds: хоёр цаг
 app_launcher:
   runners:
     explorer: Урсгал
@@ -249,3 +254,8 @@ update:
   downloading: Татаж авах ...
   channel: Суваг шинэчлэх
 miscellaneous: Олон төрлийн
+mods:
+  plugins: Гарын үсэг
+  widgets: Аялалын мэдээ
+  target: Даалгавар
+remove: Зөөх
