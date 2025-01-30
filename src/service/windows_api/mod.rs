@@ -3,8 +3,14 @@ pub mod com;
 use std::path::PathBuf;
 
 use com::Com;
+use image::{DynamicImage, RgbaImage};
+use win_screenshot::prelude::capture_window;
 use windows::Win32::{
-    Foundation::{FALSE, HANDLE, HWND, LUID},
+    Foundation::{FALSE, HANDLE, HWND, LUID, RECT},
+    Graphics::Dwm::{
+        DwmGetWindowAttribute, DWMWA_EXTENDED_FRAME_BOUNDS, DWMWA_VISIBLE_FRAME_BORDER_THICKNESS,
+        DWMWINDOWATTRIBUTE,
+    },
     Security::{
         AdjustTokenPrivileges, LookupPrivilegeValueW, SE_PRIVILEGE_ENABLED,
         TOKEN_ADJUST_PRIVILEGES, TOKEN_PRIVILEGES, TOKEN_QUERY,
@@ -17,9 +23,10 @@ use windows::Win32::{
         HiDpi::{SetProcessDpiAwarenessContext, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2},
         Shell::{IShellLinkW, ShellLink},
         WindowsAndMessaging::{
-            BringWindowToTop, GetForegroundWindow, GetWindowThreadProcessId, IsIconic,
-            SetWindowPos, ShowWindow, ShowWindowAsync, SET_WINDOW_POS_FLAGS, SHOW_WINDOW_CMD,
-            SWP_NOACTIVATE, SWP_NOZORDER, SW_RESTORE,
+            BringWindowToTop, GetForegroundWindow, GetWindowLongW, GetWindowRect,
+            GetWindowThreadProcessId, IsIconic, SetWindowPos, ShowWindow, ShowWindowAsync,
+            GWL_STYLE, SET_WINDOW_POS_FLAGS, SHOW_WINDOW_CMD, SWP_NOACTIVATE, SWP_NOZORDER,
+            SW_RESTORE, WINDOW_STYLE, WS_SIZEBOX, WS_THICKFRAME,
         },
     },
 };
@@ -185,5 +192,80 @@ impl WindowsApi {
             persist_file.Save(lnk_path_wide.as_pcwstr(), true)?;
             Ok(lnk_path)
         })
+    }
+
+    pub fn capture_window(hwnd: HWND) -> Option<DynamicImage> {
+        capture_window(hwnd.0 as isize).ok().map(|buf| {
+            let image = RgbaImage::from_raw(buf.width, buf.height, buf.pixels).unwrap_or_default();
+            DynamicImage::ImageRgba8(image)
+        })
+    }
+
+    /// return the window rect excluding drop shadow & thick border
+    /// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowrect#remarks
+    pub fn get_inner_window_rect(hwnd: HWND) -> Result<RECT> {
+        let mut rect = RECT::default();
+        if Self::dwm_get_window_attribute(hwnd, DWMWA_EXTENDED_FRAME_BOUNDS, &mut rect).is_err() {
+            rect = Self::get_outer_window_rect(hwnd)?;
+        }
+
+        let styles = Self::get_styles(hwnd);
+        if styles.contains(WS_THICKFRAME) || styles.contains(WS_SIZEBOX) {
+            let thickness = Self::get_window_thickness(hwnd) as i32;
+            rect.left += thickness;
+            rect.top += thickness;
+            rect.right -= thickness;
+            rect.bottom -= thickness;
+        }
+
+        Ok(rect)
+    }
+
+    fn get_window_thickness(hwnd: HWND) -> u32 {
+        let mut thickness = 0u32;
+        let _ = Self::dwm_get_window_attribute(
+            hwnd,
+            DWMWA_VISIBLE_FRAME_BORDER_THICKNESS,
+            &mut thickness,
+        );
+        thickness
+    }
+
+    pub fn shadow_rect(hwnd: HWND) -> Result<RECT> {
+        let outer_rect = Self::get_outer_window_rect(hwnd)?;
+        let inner_rect = Self::get_inner_window_rect(hwnd)?;
+        Ok(RECT {
+            left: outer_rect.left - inner_rect.left,
+            top: outer_rect.top - inner_rect.top,
+            right: outer_rect.right - inner_rect.right,
+            bottom: outer_rect.bottom - inner_rect.bottom,
+        })
+    }
+
+    pub fn dwm_get_window_attribute<T>(
+        hwnd: HWND,
+        attribute: DWMWINDOWATTRIBUTE,
+        value: &mut T,
+    ) -> Result<()> {
+        unsafe {
+            DwmGetWindowAttribute(
+                hwnd,
+                attribute,
+                (value as *mut T).cast(),
+                u32::try_from(std::mem::size_of::<T>())?,
+            )?;
+        }
+        Ok(())
+    }
+
+    pub fn get_styles(hwnd: HWND) -> WINDOW_STYLE {
+        WINDOW_STYLE(unsafe { GetWindowLongW(hwnd, GWL_STYLE) } as u32)
+    }
+
+    /// Get the window rect including drop shadow
+    pub fn get_outer_window_rect(hwnd: HWND) -> Result<RECT> {
+        let mut rect = RECT::default();
+        unsafe { GetWindowRect(hwnd, &mut rect)? };
+        Ok(rect)
     }
 }

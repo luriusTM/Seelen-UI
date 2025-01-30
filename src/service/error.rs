@@ -33,6 +33,8 @@ define_app_errors!(
     Custom(String);
     Io(std::io::Error);
     Windows(windows::core::Error);
+    Windows(image::ImageError);
+    TryFromInt(std::num::TryFromIntError);
     SerdeJson(serde_json::Error);
     Logger(log::SetLoggerError);
     WideStringNull(widestring::error::MissingNulTerminator);

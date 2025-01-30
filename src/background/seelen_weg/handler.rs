@@ -7,6 +7,7 @@ use tauri_plugin_shell::ShellExt;
 
 use crate::{
     error_handler::Result,
+    modules::cli::ServiceClient,
     seelen::get_app_handle,
     seelen_weg::weg_items_impl::WEG_ITEMS_IMPL,
     state::application::FULL_STATE,
@@ -41,23 +42,28 @@ pub fn weg_request_update_previews(handles: Vec<isize>) -> Result<()> {
             continue;
         }
 
-        let image = SeelenWeg::capture_window(window.hwnd());
-        if let Some(image) = image {
-            let rect = WindowsApi::get_inner_window_rect(window.hwnd())?;
-            let shadow = WindowsApi::shadow_rect(window.hwnd())?;
-            let width = rect.right - rect.left;
-            let height = rect.bottom - rect.top;
+        if window.process().open_handle().is_ok() {
+            let image = SeelenWeg::capture_window(window.hwnd());
+            if let Some(image) = image {
+                let rect = WindowsApi::get_inner_window_rect(window.hwnd())?;
+                let shadow = WindowsApi::shadow_rect(window.hwnd())?;
+                let width = rect.right - rect.left;
+                let height = rect.bottom - rect.top;
 
-            let image = image.crop_imm(
-                shadow.left.unsigned_abs(),
-                shadow.top.unsigned_abs(),
-                width as u32,
-                height as u32,
-            );
+                let image = image.crop_imm(
+                    shadow.left.unsigned_abs(),
+                    shadow.top.unsigned_abs(),
+                    width as u32,
+                    height as u32,
+                );
 
-            image.save_with_format(temp_dir.join(format!("{}.png", addr)), ImageFormat::Png)?;
-            get_app_handle().emit(format!("weg-preview-update-{}", addr).as_str(), ())?;
+                image.save_with_format(temp_dir.join(format!("{}.png", addr)), ImageFormat::Png)?;
+            }
+        } else {
+            ServiceClient::emit_request_update_preview(addr)?;
         }
+
+        get_app_handle().emit(format!("weg-preview-update-{}", addr).as_str(), ())?;
     }
     Ok(())
 }

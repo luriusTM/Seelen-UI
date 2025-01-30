@@ -206,6 +206,10 @@ impl ServiceClient {
         ])
     }
 
+    pub fn emit_request_update_preview(hwnd: isize) -> Result<()> {
+        Self::send_message(&["request_update_preview", &hwnd.to_string()])
+    }
+
     pub fn emit_set_foreground(hwnd: isize) -> Result<()> {
         Self::send_message(&["set-foreground", &hwnd.to_string()])
     }

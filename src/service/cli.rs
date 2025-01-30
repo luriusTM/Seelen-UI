@@ -4,7 +4,9 @@ use std::{
 };
 
 use clap::{Arg, Command};
+use image::ImageFormat;
 use serde::Deserialize;
+use windows::Win32::Foundation::HWND;
 
 use crate::{
     enviroment::{add_installation_dir_to_path, remove_installation_dir_from_path},
@@ -25,6 +27,7 @@ impl ServiceSubcommands {
     pub const SHOW_WINDOW_ASYNC: &str = "show-window-async";
     pub const SET_WINDOW_POSITION: &str = "set-window-position";
     pub const SET_FOREGROUND: &str = "set-foreground";
+    pub const REQUEST_UPDATE_PREVIEW: &str = "request_update_preview";
 }
 
 pub fn get_cli() -> Command {
@@ -88,6 +91,7 @@ pub fn get_cli() -> Command {
                     .required(true),
             ]),
             Command::new(ServiceSubcommands::SET_FOREGROUND).args([hwnd_arg.clone()]),
+            Command::new(ServiceSubcommands::REQUEST_UPDATE_PREVIEW).args([hwnd_arg.clone()]),
         ])
 }
 
@@ -148,6 +152,30 @@ pub fn handle_tcp_cli(matches: &clap::ArgMatches) -> Result<()> {
         Some((ServiceSubcommands::SET_FOREGROUND, arg)) => {
             let hwnd = *arg.get_one::<isize>("hwnd").unwrap();
             WindowsApi::set_foreground(hwnd)?;
+        }
+        Some((ServiceSubcommands::REQUEST_UPDATE_PREVIEW, arg)) => {
+            let hwnd = *arg.get_one::<isize>("hwnd").unwrap();
+            let window_hwnd = HWND(hwnd as _);
+
+            let image = WindowsApi::capture_window(window_hwnd);
+            if let Some(image) = image {
+                let rect = WindowsApi::get_inner_window_rect(window_hwnd)?;
+                let shadow = WindowsApi::shadow_rect(window_hwnd)?;
+                let width = rect.right - rect.left;
+                let height = rect.bottom - rect.top;
+
+                let image = image.crop_imm(
+                    shadow.left.unsigned_abs(),
+                    shadow.top.unsigned_abs(),
+                    width as u32,
+                    height as u32,
+                );
+
+                image.save_with_format(
+                    std::env::temp_dir().join(format!("{}.png", hwnd)),
+                    ImageFormat::Png,
+                )?;
+            }
         }
         _ => (),
     }
