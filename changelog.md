@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+## [2.1.9]
+### fix
+- shortcuts not working on MSIX.
+- empty username for local accounts.
+
 ## [2.1.8]
 ### features
 - add button to clear the cached icons on settings.
