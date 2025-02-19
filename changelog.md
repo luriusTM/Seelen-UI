@@ -1,6 +1,19 @@
 # Changelog
 
 ## [Unreleased]
+### features
+- add option to disable app thumbnail generation (dock).
+- allow lock the dock/toolbar items.
+- show instances counter of the same app on dock.
+- allow set the toolbar on different positions.
+
+### enhancements
+- settings shown each time on startup.
+- expand power module with power plan.
+
+### refactor
+- update windows-rs crate to 0.59.0.
+
 ## [2.1.9]
 ### fix
 - shortcuts not working on MSIX.

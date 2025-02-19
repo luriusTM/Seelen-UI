@@ -15,11 +15,9 @@ import {
 } from '@seelen-ui/lib';
 import { Placeholder, ToolbarItem } from '@seelen-ui/lib/types';
 
-import { RootState } from './domain';
+import { PowerPlan, RootState } from './domain';
 
 import { StateBuilder } from '../../../../shared/StateBuilder';
-
-const settings = await Settings.default();
 
 const initialState: RootState = {
   version: 0,
@@ -36,7 +34,7 @@ const initialState: RootState = {
   userVideosFolder: [],
   userMusicFolder: [],
   focused: null,
-  settings: settings.fancyToolbar,
+  settings: (await Settings.default()).fancyToolbar,
   env: (await invoke(SeelenCommand.GetUserEnvs)) as Record<string, string>,
   // default values of https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-system_power_status
   powerStatus: {
@@ -47,6 +45,7 @@ const initialState: RootState = {
     batteryLifeTime: -1,
     batteryFullLifeTime: -1,
   },
+  powerPlan: PowerPlan.Balanced,
   batteries: [],
   workspaces: [],
   activeWorkspace: null,
@@ -105,6 +104,12 @@ export const RootSlice = createSlice({
         state.items.left = state.items.left.filter(filter);
         state.items.center = state.items.center.filter(filter);
         state.items.right = state.items.right.filter(filter);
+      }
+    },
+    setToolbarReorderDisabled(state, action: PayloadAction<boolean>) {
+      let enabled = action.payload;
+      if (state.items) {
+        state.items.isReorderDisabled = enabled;
       }
     },
   },
