@@ -6,6 +6,7 @@
 - allow lock the dock/toolbar items.
 - show instances counter of the same app on dock.
 - allow set the toolbar on different positions.
+- allow set custom start menu icon.
 
 ### enhancements
 - settings shown each time on startup.
@@ -13,6 +14,9 @@
 
 ### refactor
 - update windows-rs crate to 0.59.0.
+
+### fix
+- showing domain on username for local accounts.
 
 ## [2.1.9]
 ### fix
