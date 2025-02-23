@@ -3,7 +3,7 @@ import {
   DesktopFolder,
   DocumentsFolder,
   DownloadsFolder,
-  invoke,
+  LanguageList,
   MusicFolder,
   PicturesFolder,
   RecentFolder,
@@ -14,8 +14,9 @@ import {
   VideosFolder,
 } from '@seelen-ui/lib';
 import { Placeholder, ToolbarItem } from '@seelen-ui/lib/types';
+import { invoke } from '@tauri-apps/api/core';
 
-import { PowerPlan, RootState } from './domain';
+import { Battery, PowerPlan, PowerStatus, RootState } from './domain';
 
 import { StateBuilder } from '../../../../shared/StateBuilder';
 
@@ -45,7 +46,7 @@ const initialState: RootState = {
     batteryLifeTime: -1,
     batteryFullLifeTime: -1,
   },
-  powerPlan: PowerPlan.Balanced,
+  powerPlan: PowerPlan.Unknown,
   batteries: [],
   workspaces: [],
   activeWorkspace: null,
@@ -59,6 +60,7 @@ const initialState: RootState = {
   mediaInputs: [],
   notifications: [],
   colors: UIColors.default().inner,
+  languages: [],
 };
 
 export const RootSlice = createSlice({
@@ -120,6 +122,16 @@ export const Selectors = StateBuilder.compositeSelector(initialState);
 
 // no core things that can be lazy loaded to improve performance
 export async function lazySlice(d: Dispatch) {
+  invoke<PowerStatus>(SeelenCommand.GetPowerStatus).then((status) =>
+    d(RootActions.setPowerStatus(status)),
+  );
+  invoke<PowerPlan>(SeelenCommand.GetPowerMode).then((plan) => d(RootActions.setPowerPlan(plan)));
+  invoke<Battery[]>(SeelenCommand.GetBatteries).then((batteries) =>
+    d(RootActions.setBatteries(batteries)),
+  );
+
+  LanguageList.getAsync().then((list) => d(RootActions.setLanguages(list.asArray())));
+
   const obj = {
     userRecentFolder: (await RecentFolder.getAsync()).asArray(),
     userDesktopFolder: (await DesktopFolder.getAsync()).asArray(),
