@@ -9,6 +9,7 @@
 - allow set custom start menu icon.
 - language selector for toolbar.
 - add dynamic color by focused app on toolbar.
+- add hibernate button on toolbar power menu.
 
 ### enhancements
 - settings shown each time on startup.
@@ -20,6 +21,7 @@
 ### fix
 - showing domain on username for local accounts.
 - showing application frame host instead real app name.
+- incorrect event order on win events.
 
 ## [2.1.9]
 ### fix
