@@ -1488,9 +1488,9 @@ checksum = "4ef6b89e5b37196644d8796de5268852ff179b44e96276cf4290264843743bb7"
 
 [[package]]
 name = "encoding_rs"
-version = "0.8.34"
+version = "0.8.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b45de904aa0b010bce2ab45264d0631681847fa7b6f2eaa7dab7619943bc4f59"
+checksum = "75030f3c4f45dafd7586dd6780965a8c7e8e285a5ecb86713e63a79c5b2766f3"
 dependencies = [
  "cfg-if",
 ]
@@ -4895,7 +4895,7 @@ checksum = "1c107b6f4780854c8b126e228ea8869f4d7b71260f962fefb57b996b8959ba6b"
 [[package]]
 name = "seelen-core"
 version = "2.1.8"
-source = "git+https://github.com/Seelen-Inc/slu-lib.git#28e2217fa46abeefff2c2c8ff8b11c6271952166"
+source = "git+https://github.com/Seelen-Inc/slu-lib.git#6f175ca59564c8e508641fbd253b09b2b8044c22"
 dependencies = [
  "base64 0.22.1",
  "grass",

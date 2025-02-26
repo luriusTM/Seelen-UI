@@ -6,7 +6,6 @@ use seelen_core::{command_handler_list, system_state::Color};
 
 use tauri::{Builder, WebviewWindow, Wry};
 use tauri_plugin_shell::ShellExt;
-use windows::Win32::Foundation::HWND;
 
 use crate::error_handler::Result;
 use crate::hook::HookManager;
@@ -23,7 +22,7 @@ use crate::utils::{is_running_as_appx, is_virtual_desktop_supported as virtual_d
 use crate::windows_api::hdc::DeviceContext;
 use crate::windows_api::window::Window;
 use crate::windows_api::WindowsApi;
-use crate::winevent::{SyntheticFullscreenData, WinEvent};
+use crate::winevent::WinEvent;
 use crate::{log_error, utils};
 
 #[tauri::command(async)]
@@ -138,14 +137,12 @@ fn is_virtual_desktop_supported() -> bool {
 
 #[tauri::command(async)]
 fn simulate_fullscreen(webview: WebviewWindow<tauri::Wry>, value: bool) -> Result<()> {
-    let handle = HWND(webview.hwnd()?.0);
-    let monitor = WindowsApi::monitor_from_window(handle);
-    let event = if value {
-        WinEvent::SyntheticFullscreenStart(SyntheticFullscreenData { handle, monitor })
-    } else {
-        WinEvent::SyntheticFullscreenEnd(SyntheticFullscreenData { handle, monitor })
+    let window = Window::from(webview.hwnd()?.0 as isize);
+    let event = match value {
+        true => WinEvent::SyntheticFullscreenStart,
+        false => WinEvent::SyntheticFullscreenEnd,
     };
-    HookManager::event_tx().send((event, Window::from(handle)))?;
+    HookManager::event_tx().send((event, window))?;
     Ok(())
 }
 
@@ -155,17 +152,20 @@ async fn check_for_updates() -> Result<bool> {
 }
 
 #[tauri::command(async)]
-async fn get_foreground_window_color() -> Result<Color> {
-    let window = Window::from(WindowsApi::get_foreground_window());
-    if !window.is_visible()
-        || !window.is_maximized()
-        || window.is_minimized()
-        || window.is_desktop()
-    {
+async fn get_foreground_window_color(webview: WebviewWindow<tauri::Wry>) -> Result<Color> {
+    let webview = Window::from(webview.hwnd()?.0 as isize);
+    let foreground = Window::get_foregrounded();
+
+    if webview.monitor() != foreground.monitor() {
         return Ok(Color::default());
     }
+
+    if !foreground.is_visible() || foreground.is_desktop() {
+        return Ok(Color::default());
+    }
+
     let hdc = DeviceContext::create(None);
-    let rect = window.inner_rect()?;
+    let rect = foreground.inner_rect()?;
     let x = rect.left + (rect.right - rect.left) / 2;
     Ok(hdc.get_pixel(x, rect.top + 2))
 }
@@ -188,6 +188,7 @@ pub fn register_invoke_handler(app_builder: Builder<Wry>) -> Builder<Wry> {
     use crate::state::infrastructure::*;
     use crate::system::brightness::*;
 
+    use crate::modules::bluetooth::infrastructure::*;
     use crate::modules::language::*;
     use crate::modules::media::infrastructure::*;
     use crate::modules::monitors::infrastructure::*;
